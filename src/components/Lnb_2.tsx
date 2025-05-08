@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
-const LeftNavigationbar = () => {
+const Lnb_2 = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
@@ -14,7 +14,7 @@ const LeftNavigationbar = () => {
           isOpen ? 'w-64' : 'w-0 overflow-hidden'
         }`}
       >
-        <div className="whitespace-nowrap">LeftNavigationbar</div>
+        <div className="whitespace-nowrap">LNB_2</div>
       </div>
 
       {/* Main Content */}
@@ -31,4 +31,4 @@ const LeftNavigationbar = () => {
   );
 };
 
-export default LeftNavigationbar
+export default Lnb_2
