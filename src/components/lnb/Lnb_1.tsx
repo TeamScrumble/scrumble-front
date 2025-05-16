@@ -3,7 +3,6 @@ import { FetchProjectResponse } from "../../api/project";
 import ProjectProfile from "./ProjectProfile";
 import ProjectAddBtn from "./ProjectAddBtn";
 
-
 const Lnb_1 = () => {
   // const { data, isLoading, error } = useQuery({
   //   queryKey: ['project'],
@@ -45,22 +44,22 @@ const Lnb_1 = () => {
     <div className="flex" style={{ height: "calc(100vh - 66px)" }}>
       {/* Sidebar */}
       <div
-        className={"flex flex-col place-content-between  bg-[#d9d9d9] text-white px-3 py-7 w-18"}
+        className={
+          "flex flex-col place-content-between  bg-[#d9d9d9] text-white px-3 py-7 w-18"
+        }
       >
         <div>
           <div className="flex flex-col gap-3">
             {dummyProjects?.map((project: FetchProjectResponse) => (
-              <ProjectProfile url={""} title={project.title}/>
+              <ProjectProfile url={""} title={project.title} />
             ))}
-            <ProjectAddBtn/>
+            <ProjectAddBtn />
           </div>
         </div>
-        <div className="flex">
-          멤버
-        </div>
+        <div className="flex">멤버</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Lnb_1
+export default Lnb_1;

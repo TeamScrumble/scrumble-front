@@ -1,20 +1,20 @@
-import SearchInput from "../common/SearchInput"
+import SearchInput from "../common/SearchInput";
 
 interface HeaderProps {
-  toggleSidebar: () => void
+  toggleSidebar: () => void;
 }
 
-const Header :React.FC<HeaderProps> = ({toggleSidebar}) => {
+const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
   const searchEnterEvent = () => {
     // 엔터 이벤트 주기
-  }
+  };
 
   return (
     <div className="flex w-screen bg-[#F6F6F6] items-center h-[66px]">
       <div className="flex items-center">
         <button
           onClick={toggleSidebar}
-          className="ml-5 w-16 bg-white px-4 py-2 rounded shadow"
+          className="w-16 px-4 py-2 ml-5 bg-white rounded shadow"
         >
           {"메뉴"}
         </button>
@@ -25,10 +25,10 @@ const Header :React.FC<HeaderProps> = ({toggleSidebar}) => {
       </div>
 
       <div className="flex w-full place-content-center">
-        <SearchInput enterEvent={searchEnterEvent}/>
+        <SearchInput enterEvent={searchEnterEvent} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
