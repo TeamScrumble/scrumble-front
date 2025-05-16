@@ -11,10 +11,15 @@ type COLOR_TYPES = "primary" | "secondary";
 
 const css = {
   primary: "bg-primary-500 text-white",
-  secondary: "border border-solid border-primary-500 bg-white text-primary-500"
-}
+  secondary: "border border-solid border-primary-500 bg-white text-primary-500",
+};
 
-const Button = ({ label, buttonType, colorType, onClick = () => {}}: Props) => {
+const Button = ({
+  label,
+  buttonType,
+  colorType,
+  onClick = () => {},
+}: Props) => {
   return (
     <button
       type={buttonType}
@@ -24,6 +29,6 @@ const Button = ({ label, buttonType, colorType, onClick = () => {}}: Props) => {
       {label}
     </button>
   );
-}
+};
 
 export default Button;
