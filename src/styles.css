@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-500: #FB923C;
+  --color-primary-500: #fb923c;
 }
 
 /* 1. CSS Reset 또는 Normalize */
@@ -17,7 +17,7 @@ body {
   margin:0;
   padding:0;
   height: 100%;
-  font-family: 'Pretendard', sans-serif;
+  font-family: "Pretendard", sans-serif;
   background-color: #f9f9f9;
   color: #222;
   line-height: 1.5;
