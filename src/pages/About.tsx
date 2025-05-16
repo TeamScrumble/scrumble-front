@@ -1,10 +1,9 @@
-
 const About = () => {
   return (
-    <div className="h-screen flex justify-center">
+    <div className="flex justify-center h-screen">
       <h1>About</h1>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;
