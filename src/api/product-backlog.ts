@@ -6,7 +6,8 @@ export async function fetchProductBacklog(request: FetchProductBacklogRequest): 
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(request)
+    body: JSON.stringify(request),
+    credentials: "include"
   });
   if (!res.ok) throw new Error('Network response was not ok');
   return res.json();
@@ -30,6 +31,7 @@ export async function createProductBacklog(request: CreateProductBacklogRequest)
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(request),
+    credentials: "include"
   });
 
   if (!res.ok) throw new Error('User creation failed');

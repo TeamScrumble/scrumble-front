@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary-500: #FB923C;
+}
+
 /* 1. CSS Reset 또는 Normalize */
 *,
 *::before,
@@ -18,24 +22,4 @@ body {
   color: #222;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-}
-
-/* 3. 링크 및 버튼 초기화 */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-button {
-  font-family: inherit;
-  border: none;
-  cursor: pointer;
-}
-
-/* 4. input, textarea 초기화 */
-input,
-textarea {
-  font: inherit;
-  border: none;
-  outline: none;
 }
