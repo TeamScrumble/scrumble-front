@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { FetchProjectResponse, fetchProject } from "../../api/project";
+// import { useQuery } from "@tanstack/react-query";
+import { FetchProjectResponse } from "../../api/project";
 import ProjectProfile from "./ProjectProfile";
 import ProjectAddBtn from "./ProjectAddBtn";
 
