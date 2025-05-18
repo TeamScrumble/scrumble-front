@@ -1,11 +1,24 @@
-interface ProjectProfileProps {
+import { useNavigate } from "react-router-dom";
+
+type Props = {
   url: string | null;
   title: string;
-}
+  rowid: number;
+};
 
-const ProjectProfile: React.FC<ProjectProfileProps> = ({ url, title }) => {
+const ProjectProfile = ({ url, title, rowid }: Props) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate(`/project/${rowid}`)
+  }
+
   return (
-    <div className="flex items-center justify-center w-11 h-11 rounded-[6px] bg-amber-600 hover:bg-amber-700 overflow-hidden text-sm font-medium cursor-pointer">
+    <div
+      onClick={handleClick}
+      className="flex items-center justify-center w-11 h-11 rounded-[6px] bg-amber-600 hover:bg-amber-700 overflow-hidden text-sm font-medium cursor-pointer"
+    >
       {url ? (
         <img src={url} alt={title} className="object-cover w-full h-full" />
       ) : (

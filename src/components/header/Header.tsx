@@ -1,10 +1,10 @@
 import SearchInput from "../common/SearchInput";
 
-interface HeaderProps {
+type Props = {
   toggleSidebar: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
+const Header = ({ toggleSidebar }: Props) => {
   const searchEnterEvent = () => {
     // 엔터 이벤트 주기
   };

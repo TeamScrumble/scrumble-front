@@ -1,8 +1,8 @@
-interface Lnb2Props {
+type Props = {
   isOpen: boolean;
 }
 
-const Lnb_2: React.FC<Lnb2Props> = ({ isOpen }) => {
+const Lnb_2 = ({ isOpen }: Props) => {
   return (
     <div
       className="flex text-[#1A1A1A] "
