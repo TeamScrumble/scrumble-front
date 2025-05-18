@@ -1,11 +1,10 @@
-// components/SearchBar.tsx
 import { useState } from "react";
 
-interface SearchInputProps {
+type Props = {
   enterEvent: () => void;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ enterEvent }) => {
+const SearchInput = ({ enterEvent }: Props) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

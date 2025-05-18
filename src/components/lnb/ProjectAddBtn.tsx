@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useCreateProject } from "../../api/project";
-import Modal from "../Modal";
-import FileUploadBox from "../FileUploadBox";
-import TextInput from "../TextInput";
-import Button from "../Button";
+import Modal from "../common/Modal";
+import FileUploadBox from "../common/FileUploadBox";
+import TextInput from "../common/TextInput";
+import Button from "../common/Button";
 
 const ProjectAddBtn = () => {
   const { mutate } = useCreateProject();
@@ -14,40 +14,47 @@ const ProjectAddBtn = () => {
     description: "",
   });
 
-  const modalOpen = () => {
+  const modalOpen = useCallback(() => {
     setIsModalOpen(true);
     setFile(null);
     setFormData({
       title: "",
       description: "",
     });
-  };
+  }, []);
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("입력값:", formData);
-    console.log("파일", file);
-    mutate({ title: formData.title });
-    setIsModalOpen(false);
-  };
+  const onSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      console.log("입력값:", formData);
+      console.log("파일", file);
+      mutate({ title: formData.title }); // 현재 title만 들어감
+      setIsModalOpen(false);
+    },
+    [formData, file, mutate]
+  );
 
-  const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    e.preventDefault();
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const onChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      e.preventDefault();
+      setFormData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    [setFormData]
+  );
+
   return (
     <>
+      {/* 모달 오픈 버튼튼 */}
       <div
         onClick={modalOpen}
         className="w-11 h-11 rounded-[6px] border border-black flex items-center justify-center text-2xl text-black cursor-pointer hover:bg-gray-300"
       >
         +
       </div>
+      {/* 모달창 */}
       <Modal
         width={560}
         isOpen={isModalOpen}

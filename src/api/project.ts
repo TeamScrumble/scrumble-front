@@ -1,7 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
-import { API_BASE_URL } from "./baseUrl";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { API_BASE_URL, CommonResponse } from "./common";
 
-export async function fetchProject(): Promise<FetchProjectResponse[]> {
+export type Project = {
+  rowid: number;
+  title: string;
+  regDate: Date;
+};
+
+export async function fetchProject(): Promise<FetchProjectResponse> {
   const res = await fetch(`${API_BASE_URL}/projects`, {
     method: "GET",
     headers: {
@@ -13,11 +19,11 @@ export async function fetchProject(): Promise<FetchProjectResponse[]> {
   return res.json();
 }
 
-export type FetchProjectResponse = {
-  rowid: number;
-  title: string;
-  regDate: Date;
-};
+export type FetchProjectResponse = CommonResponse & {
+  data: {
+    projects: Project[];
+  }
+}
 
 async function createProject(
   request: CreateProjectRequest
@@ -38,15 +44,21 @@ export type CreateProjectRequest = {
   title: string;
 };
 
-export type CreateProjectResponse = {
-  rowid: number;
+export type CreateProjectResponse = CommonResponse & {
+  data: {
+    rowid: number;
+  }
 };
 
 export const useCreateProject = () => {
-  return useMutation({
+  const queryClient = useQueryClient();
+  return useMutation({  
     mutationFn: createProject,
-    onSuccess: (data) => {
-      console.log("요청 성공:", data);
+    onSuccess: () => {
+      // Create 성공이후, 리패칭
+      queryClient.invalidateQueries({
+        queryKey: ["projects"],
+      });
     },
     onError: (error) => {
       console.error("요청 실패:", error);

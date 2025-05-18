@@ -1,44 +1,22 @@
-// import { useQuery } from "@tanstack/react-query";
-import { FetchProjectResponse } from "../../api/project";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProject, Project } from "../../api/project";
 import ProjectProfile from "./ProjectProfile";
 import ProjectAddBtn from "./ProjectAddBtn";
+import Modal from "../common/Modal";
 
 const Lnb_1 = () => {
-  // const { data, isLoading, error } = useQuery({
-  //   queryKey: ['project'],
-  //   queryFn: fetchProject,
-  // });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["projects"],
+    queryFn: fetchProject,
+  });
 
-  // if (isLoading) return <div>로딩 중...</div>;
-  // if (error instanceof Error) return <div>에러 발생: {error.message}</div>;
-
-  const dummyProjects: FetchProjectResponse[] = [
-    {
-      rowid: 1,
-      title: "Project Alpha",
-      regDate: new Date("2024-12-01"),
-    },
-    {
-      rowid: 2,
-      title: "Beta Launch",
-      regDate: new Date("2025-01-15"),
-    },
-    {
-      rowid: 3,
-      title: "Gamma UI",
-      regDate: new Date("2025-02-20"),
-    },
-    {
-      rowid: 4,
-      title: "Delta Build",
-      regDate: new Date("2025-03-10"),
-    },
-    {
-      rowid: 5,
-      title: "Epsilon",
-      regDate: new Date("2025-04-05"),
-    },
-  ];
+  if (isLoading)
+    return (
+      <Modal width={100} isOpen={true} onClose={() => {}}>
+        <div>로딩 중...</div>
+      </Modal>
+    );
+  if (error instanceof Error) return <div>에러 발생: {error.message}</div>;
 
   return (
     <div className="flex" style={{ height: "calc(100vh - 66px)" }}>
@@ -50,8 +28,8 @@ const Lnb_1 = () => {
       >
         <div>
           <div className="flex flex-col gap-3">
-            {dummyProjects?.map((project: FetchProjectResponse) => (
-              <ProjectProfile url={""} title={project.title} />
+            {data?.data?.projects?.map((project: Project, i: number) => (
+              <ProjectProfile key={i} rowid={project.rowid} url={""} title={project.title} />
             ))}
             <ProjectAddBtn />
           </div>

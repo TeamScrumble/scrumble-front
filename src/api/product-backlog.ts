@@ -1,4 +1,11 @@
-import { API_BASE_URL } from "./baseUrl";
+import { API_BASE_URL, CommonResponse } from "./common";
+
+export type ProductBacklog = {
+  productBacklogRowid: number;
+  title: string;
+  description: string;
+  regDate: Date;
+}
 
 export async function fetchProductBacklog(
   request: FetchProductBacklogRequest
@@ -19,11 +26,8 @@ export type FetchProductBacklogRequest = {
   projectRowid: number;
 };
 
-export type FetchProductBacklogResponse = {
-  productBacklogRowid: number;
-  title: string;
-  description: string;
-  regDate: Date;
+export type FetchProductBacklogResponse = CommonResponse & {
+  data: ProductBacklog[];
 };
 
 export async function createProductBacklog(
@@ -43,14 +47,11 @@ export async function createProductBacklog(
 }
 
 export type CreateProductBacklogRequest = {
-  projectRowid: number;
+  productBacklogRowid: number;
   title: string;
   description: string;
 };
 
-export type CreateProductBacklogResponse = {
-  productBacklogRowid: number;
-  title: string;
-  description: string;
-  regDate: Date;
+export type CreateProductBacklogResponse = CommonResponse & {
+  data: ProductBacklog;
 };
