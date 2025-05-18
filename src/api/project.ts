@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { API_BASE_URL } from "./baseUrl";
 
 export async function fetchProject(): Promise<FetchProjectResponse[]> {
-  const res = await fetch(`${API_BASE_URL}/project`, {
+  const res = await fetch(`${API_BASE_URL}/projects`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

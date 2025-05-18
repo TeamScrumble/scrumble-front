@@ -3,7 +3,7 @@ import { API_BASE_URL } from "./baseUrl";
 export async function fetchProductBacklog(
   request: FetchProductBacklogRequest
 ): Promise<FetchProductBacklogResponse> {
-  const res = await fetch(`${API_BASE_URL}/product-backlog`, {
+  const res = await fetch(`${API_BASE_URL}/product-backlogs`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
