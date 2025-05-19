@@ -1,0 +1,98 @@
+name: React 애플리케이션 빌드 및 도커 배포
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: 'Deploy front'
+        required: true
+        type: choice
+        options:
+        - manual-deploy
+        - total-deploy
+
+jobs:
+    node-build:
+        runs-on: build
+        if: ${{ inputs.deploy_target == 'total-deploy' || (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') }}
+        steps:
+        - name: 소스 코드 체크아웃
+          uses: actions/checkout@v4
+    
+        - name: Node.js 20 설정
+          uses: actions/setup-node@v4
+          with:
+            node-version: '20'
+            cache: 'npm'
+    
+        - name: npm 캐시 복원
+          uses: actions/cache@v4
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
+    
+        - name: 의존성 설치
+          run: npm ci
+    
+        - name: React 앱 빌드
+          run: npm run build
+    
+        - name: 빌드 결과물 업로드
+          uses: actions/upload-artifact@v4
+          with:
+            name: react-build
+            path: build
+
+    docker-build:
+        runs-on: build
+        needs: node-build
+        if: ${{ inputs.deploy_target == 'total-deploy' || (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') }}
+        steps:
+        - name: 소스 코드 체크아웃
+          uses: actions/checkout@v4
+
+        - name: 빌드 결과물 다운로드
+          uses: actions/download-artifact@v4
+          with:
+            name: react-build
+            path: build
+
+        - name: Docker 이미지 빌드
+          run: docker build -t react-app:latest .
+
+        - name: 도커 이미지 아티팩트로 저장
+          run: docker save react-app:latest -o react-app.tar
+
+        - name: 도커 이미지 업로드
+          uses: actions/upload-artifact@v4
+          with:
+            name: react-app-image
+            path: react-app.tar
+
+    docker-deploy:
+        runs-on: build
+        if: ${{ inputs.deploy_target == 'total-deploy' || inputs.deploy_target == 'manual-deploy' }}
+        steps:
+        - name: 도커 이미지 다운로드
+          uses: actions/download-artifact@v4
+          with:
+            name: react-app-image
+            path: .
+
+        - name: 도커 이미지 로드
+          run: docker load -i react-app.tar
+
+        - name: 기존 컨테이너 중지 및 삭제 (있을 경우)
+          run: |
+            docker stop react-app || true
+            docker rm react-app || true
+
+        - name: 새 컨테이너 실행
+          run: |
+            docker run -d \
+            --name react-app \
+            --network scrumble \
+            -p 3000:80 \
+            react-app:latest
