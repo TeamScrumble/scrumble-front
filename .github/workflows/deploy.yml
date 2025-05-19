@@ -43,7 +43,7 @@ jobs:
           uses: actions/upload-artifact@v4
           with:
             name: node-build
-            path: build
+            path: dist
 
     docker-build:
         runs-on: build
@@ -57,7 +57,7 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: react-build
-            path: build
+            path: dist
 
         - name: Docker 이미지 빌드
           run: docker build -t localhost:5000/react-app:latest .
