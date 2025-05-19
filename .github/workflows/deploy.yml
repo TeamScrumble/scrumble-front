@@ -42,7 +42,7 @@ jobs:
         - name: 빌드 결과물 업로드
           uses: actions/upload-artifact@v4
           with:
-            name: react-build
+            name: node-build
             path: build
 
     docker-build:
