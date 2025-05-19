@@ -60,10 +60,10 @@ jobs:
             path: build
 
         - name: Docker 이미지 빌드
-          run: docker build -t react-app:latest .
+          run: docker build -t localhost:5000/react-app:latest .
 
-        - name: 도커 이미지 아티팩트로 저장
-          run: docker save react-app:latest -o react-app.tar
+        - name: 도커 이미지 푸시
+          run: docker push localhost:5000/react-app:latest
 
         - name: 도커 이미지 업로드
           uses: actions/upload-artifact@v4
@@ -71,18 +71,12 @@ jobs:
             name: react-app-image
             path: react-app.tar
 
-    docker-deploy:
+    docker-deploy-manual:
         runs-on: build
-        if: ${{ inputs.deploy_target == 'total-deploy' || inputs.deploy_target == 'manual-deploy' }}
+        if: inputs.deploy_target == 'manual-deploy'
         steps:
-        - name: 도커 이미지 다운로드
-          uses: actions/download-artifact@v4
-          with:
-            name: react-app-image
-            path: .
-
-        - name: 도커 이미지 로드
-          run: docker load -i react-app.tar
+        - name: 도커 이미지 가져오기
+          run: docker pull localhost:5000/react-app:latest
 
         - name: 기존 컨테이너 중지 및 삭제 (있을 경우)
           run: |
@@ -96,3 +90,26 @@ jobs:
             --network scrumble \
             -p 3000:80 \
             react-app:latest
+            
+
+    docker-deploy-total:
+        runs-on: build
+        needs: docker-build
+        if: inputs.deploy_target == 'total-deploy'
+        steps:
+        - name: 도커 이미지 가져오기
+          run: docker pull localhost:5000/react-app:latest
+
+        - name: 기존 컨테이너 중지 및 삭제 (있을 경우)
+          run: |
+            docker stop react-app || true
+            docker rm react-app || true
+
+        - name: 새 컨테이너 실행
+          run: |
+            docker run -d \
+            --name react-app \
+            --network scrumble \
+            -p 3000:80 \
+            react-app:latest
+            
