@@ -88,8 +88,8 @@ jobs:
             docker run -d \
             --name react-app \
             --network scrumble \
-            -p 3000:80 \
-            react-app:latest
+            -p 3111:80 \
+            localhost:5000/react-app:latest
             
 
     docker-deploy-total:
