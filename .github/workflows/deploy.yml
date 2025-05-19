@@ -34,7 +34,7 @@ jobs:
               ${{ runner.os }}-node-
     
         - name: 의존성 설치
-          run: npm ci
+          run: npm i
     
         - name: React 앱 빌드
           run: npm run build
