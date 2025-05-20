@@ -4,15 +4,19 @@ import Modal from "../common/Modal";
 import FileUploadBox from "../common/FileUploadBox";
 import TextInput from "../common/TextInput";
 import Button from "../common/Button";
+import TextAreaInput from "../common/TextAreaInput";
 
 const ProjectAddBtn = () => {
   const { mutate } = useCreateProject();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [file, setFile] = useState<File | null>(null);
+  const [, setFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
   });
+  const [titleError, setTitleError] = useState(false);
+  const [titleErrorMessage, setTitleErrorMessage] = useState("");
+  const [descriptionError, setDescriptionError] = useState(false);
 
   const modalOpen = useCallback(() => {
     setIsModalOpen(true);
@@ -21,17 +25,36 @@ const ProjectAddBtn = () => {
       title: "",
       description: "",
     });
+    setTitleError(false);
+    setDescriptionError(false);
   }, []);
 
   const onSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      console.log("입력값:", formData);
-      console.log("파일", file);
-      mutate({ title: formData.title }); // 현재 title만 들어감
-      setIsModalOpen(false);
+
+      let isTitleInvalid = false;
+      if (formData.title.length > 30) {
+        setTitleErrorMessage("프로젝트명을 30자 이내로 입력해 주세요.");
+        isTitleInvalid = true;
+      } else if (formData.title.trim().length < 1) {
+        setTitleErrorMessage("프로젝트명을 입력해 주세요.");
+        isTitleInvalid = true;
+      }
+
+      const isDescriptionInvalid = formData.description.length > 150;
+
+      setTitleError(isTitleInvalid);
+      setDescriptionError(isDescriptionInvalid);
+
+      if (!isTitleInvalid && !isDescriptionInvalid) {
+        mutate({
+          title: formData.title,
+        });
+        setIsModalOpen(false);
+      }
     },
-    [formData, file, mutate]
+    [formData, mutate]
   );
 
   const onChange = useCallback(
@@ -47,7 +70,7 @@ const ProjectAddBtn = () => {
 
   return (
     <>
-      {/* 모달 오픈 버튼튼 */}
+      {/* 모달 오픈 버튼 */}
       <div
         onClick={modalOpen}
         className="w-11 h-11 rounded-[6px] border border-black flex items-center justify-center text-2xl text-black cursor-pointer hover:bg-gray-300"
@@ -67,19 +90,23 @@ const ProjectAddBtn = () => {
         >
           <FileUploadBox onFileSelect={(f) => setFile(f)} />
           <TextInput
-            inputType="text"
             label="프로젝트명"
             name="title"
             placeholder="프로젝트 제목을 입력해주세요."
             value={formData.title}
+            required={true}
+            isError={titleError}
+            errorMessage={titleErrorMessage}
             onChange={onChange}
           />
-          <TextInput
-            inputType="textarea"
+          <TextAreaInput
             label="설명"
             name="description"
             placeholder="프로젝트에 대해 설명해주세요."
             value={formData.description}
+            required={false}
+            isError={descriptionError}
+            errorMessage={"프로젝트 설명을 150자 이내로 입력해 주세요."}
             onChange={onChange}
           />
           <div className="flex self-end gap-2">

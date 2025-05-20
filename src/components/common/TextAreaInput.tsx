@@ -11,7 +11,7 @@ type Props = {
   ) => void;
 };
 
-const TextInput = ({
+const TextAreaInput = ({
   label,
   name,
   value,
@@ -33,17 +33,17 @@ const TextInput = ({
         {label}
         {required && <span className="text-red-500">*</span>}
       </div>
-      <input
-        type="text"
+      <textarea
         value={value}
         name={name}
+        rows={3}
         onChange={onChange}
         placeholder={placeholder}
-        className={`flex items-center self-stretch h-12 gap-6 pt-3 pb-3 pl-4 pr-4 bg-white border rounded-sm ${borderColor}`}
+        className={`flex h-[120px] pt-3 pb-3 pl-4 pr-4 items-center gap-6 self-stretch border ${borderColor} bg-white rounded-sm`}
       />
       {isError && <div className="text-red-500">{errorMessage}</div>}
     </div>
   );
 };
 
-export default TextInput;
+export default TextAreaInput;
