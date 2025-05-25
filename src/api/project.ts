@@ -7,7 +7,7 @@ export type Project = {
   regDate: Date;
 };
 
-export async function fetchProject(): Promise<FetchProjectResponse> {
+export const getProject = async (): Promise<GetProjectResponse> => {
   const res = await fetch(`${API_BASE_URL}/projects`, {
     method: "GET",
     headers: {
@@ -19,15 +19,15 @@ export async function fetchProject(): Promise<FetchProjectResponse> {
   return res.json();
 }
 
-export type FetchProjectResponse = CommonResponse & {
+export type GetProjectResponse = CommonResponse & {
   data: {
     projects: Project[];
   }
 }
 
-async function createProject(
+const createProject = async (
   request: CreateProjectRequest
-): Promise<CreateProjectResponse> {
+): Promise<CreateProjectResponse> => {
   const res = await fetch(`${API_BASE_URL}/project`, {
     method: "POST",
     headers: {
@@ -42,6 +42,7 @@ async function createProject(
 
 export type CreateProjectRequest = {
   title: string;
+  description: string;
 };
 
 export type CreateProjectResponse = CommonResponse & {

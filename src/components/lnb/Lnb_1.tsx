@@ -1,14 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchProject, Project } from "../../api/project";
+import { getProject, Project } from "../../api/project";
 import ProjectProfile from "./ProjectProfile";
-import ProjectAddBtn from "./ProjectAddBtn";
 import Modal from "../common/Modal";
+import CreateProjectModal from "./CreateProjectModal";
+import { useState } from "react";
 
 const Lnb_1 = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["projects"],
-    queryFn: fetchProject,
+    queryFn: getProject,
   });
+  const [modalOpen, setModalOpen] = useState(false);
 
   if (isLoading)
     return (
@@ -36,7 +38,13 @@ const Lnb_1 = () => {
                 title={project.title}
               />
             ))}
-            <ProjectAddBtn />
+            <div
+              onClick={() => setModalOpen(true)}
+              className="w-11 h-11 rounded-[6px] border border-black flex items-center justify-center text-2xl text-black cursor-pointer hover:bg-gray-300"
+            >
+              +
+            </div>
+            <CreateProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)}/>
           </div>
         </div>
         <div className="flex">멤버</div>
