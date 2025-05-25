@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-const Project = () => {
+const Dashboard = () => {
   const { rowid } = useParams();
   // project detail에 대한 fetch가 필요함
   return (
@@ -10,4 +10,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default Dashboard;
