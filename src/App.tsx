@@ -18,8 +18,8 @@ function App() {
         <Route path="/" element={<LnbLayout />}>
           <Route index element={<Home />} />
           <Route path="/project/:rowid/dashboard" element={<Dashboard />} />
-          <Route path="/project/:rowid/dashboard" element={<ProductBacklog />} />
-          <Route path="/project/:rowid/dashboard" element={<Sprint />} />
+          <Route path="/project/:rowid/product-backlog" element={<ProductBacklog />} />
+          <Route path="/project/:rowid/sprint" element={<Sprint />} />
         </Route>
       </Routes>
     </BrowserRouter>
