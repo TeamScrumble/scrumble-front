@@ -19,7 +19,7 @@ const Lnb_1 = () => {
   if (error instanceof Error) return <div>에러 발생: {error.message}</div>;
 
   return (
-    <div className="flex" style={{ height: "calc(100vh - 66px)" }}>
+    <div className="flex">
       {/* Sidebar */}
       <div
         className={
@@ -29,7 +29,12 @@ const Lnb_1 = () => {
         <div>
           <div className="flex flex-col gap-3">
             {data?.data?.projects?.map((project: Project, i: number) => (
-              <ProjectProfile key={i} rowid={project.rowid} url={""} title={project.title} />
+              <ProjectProfile
+                key={i}
+                rowid={project.rowid}
+                url={""}
+                title={project.title}
+              />
             ))}
             <ProjectAddBtn />
           </div>
