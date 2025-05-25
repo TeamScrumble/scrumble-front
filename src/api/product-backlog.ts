@@ -1,4 +1,4 @@
-import { API_BASE_URL, CommonResponse } from "./common";
+import { API_BASE_URL, CR } from "./common";
 
 export type ProductBacklog = {
   productBacklogRowid: number;
@@ -9,7 +9,7 @@ export type ProductBacklog = {
 
 export const getProductBacklog = async (
   request: GetProductBacklogRequest
-): Promise<GetProductBacklogResponse> => {
+): Promise<CR<ProductBacklog>> => {
   const res = await fetch(`${API_BASE_URL}/product-backlogs`, {
     method: "GET",
     headers: {
@@ -26,13 +26,9 @@ export type GetProductBacklogRequest = {
   projectRowid: number;
 };
 
-export type GetProductBacklogResponse = CommonResponse & {
-  data: ProductBacklog[];
-};
-
 export const createProductBacklog = async (
   request: CreateProductBacklogRequest
-): Promise<CreateProductBacklogResponse> => {
+): Promise<CR<ProductBacklog>> => {
   const res = await fetch(`${API_BASE_URL}/product-backlog`, {
     method: "POST",
     headers: {
@@ -50,8 +46,4 @@ export type CreateProductBacklogRequest = {
   productBacklogRowid: number;
   title: string;
   description: string;
-};
-
-export type CreateProductBacklogResponse = CommonResponse & {
-  data: ProductBacklog;
 };
