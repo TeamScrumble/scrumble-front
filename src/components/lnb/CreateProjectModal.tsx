@@ -1,14 +1,13 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useCreateProject } from "../../api/project";
 import Modal from "../common/Modal";
 import FileUploadBox from "../common/FileUploadBox";
 import TextInput from "../common/TextInput";
 import Button from "../common/Button";
 import TextAreaInput from "../common/TextAreaInput";
-import { descriptionValidator, titleValidator } from "../../validation/project";
+import { createProjectValidators } from "../../validation/project";
 import { State } from "../../@types/common";
 import useCheckingSet from "../../hook/useCheckingSet";
-import { Validators } from "../../validation/common";
 
 type Props = {
   isOpen: boolean;
@@ -22,11 +21,7 @@ const CreateProjectModal = ({ isOpen, onClose }: Props) => {
     title: { value: "", isValid: true, message: "" },
     description: { value: "", isValid: true, message: "" },
   });
-  const validators: Validators = useMemo(() => ({
-    title: titleValidator,
-    description: descriptionValidator,
-  }),[]);
-  const { checkField } = useCheckingSet(validators, setFormData);
+  const { checkField } = useCheckingSet(createProjectValidators, setFormData);
 
   const clear = useCallback(() => {
     setFile(null);
