@@ -11,7 +11,7 @@ const ProjectProfile = ({ url, title, rowid }: Props) => {
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(`/project/${rowid}`)
+    navigate(`/project/${rowid}/dashboard`)
   }
 
   return (

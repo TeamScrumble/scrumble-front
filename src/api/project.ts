@@ -59,7 +59,7 @@ export const useCreateProject = () => {
       queryClient.invalidateQueries({
         queryKey: ["projects"],
       });
-      navigate(`/project/${data.projectRowid}`);
+      navigate(`/project/${data.projectRowid}/dashboard`);
     },
     onError: (error) => {
       console.error("요청 실패:", error);
