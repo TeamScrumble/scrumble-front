@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { API_BASE_URL, CommonResponse } from "./common";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL, CR } from "./common";
 
 export type Project = {
   rowid: number;
@@ -8,7 +8,7 @@ export type Project = {
   regDate: Date;
 };
 
-export const getProject = async (): Promise<GetProjectResponse> => {
+export const getProject = async (): Promise<CR<GetProject>> => {
   const res = await fetch(`${API_BASE_URL}/projects`, {
     method: "GET",
     headers: {
@@ -20,15 +20,14 @@ export const getProject = async (): Promise<GetProjectResponse> => {
   return res.json();
 }
 
-export type GetProjectResponse = CommonResponse & {
-  data: {
-    projects: Project[];
-  }
+
+export type GetProject = {
+  projects: Project[];
 }
 
 const createProject = async (
   request: CreateProjectRequest
-): Promise<CreateProjectResponse> => {
+): Promise<CR<CreateProject>> => {
   const res = await fetch(`${API_BASE_URL}/project`, {
     method: "POST",
     headers: {
@@ -46,10 +45,8 @@ export type CreateProjectRequest = {
   description: string;
 };
 
-export type CreateProjectResponse = CommonResponse & {
-  data: {
-    projectRowid: number;
-  }
+export type CreateProject = {
+  projectRowid: number;
 };
 
 export const useCreateProject = () => {
