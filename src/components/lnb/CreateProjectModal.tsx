@@ -6,7 +6,9 @@ import TextInput from "../common/TextInput";
 import Button from "../common/Button";
 import TextAreaInput from "../common/TextAreaInput";
 import { descriptionValidator, titleValidator } from "../../validation/project";
-import { ProjectFormState } from "../../@types/project";
+import { State } from "../../@types/common";
+import useCheckingSet from "../../hook/useCheckingSet";
+import { Validators } from "../../validation/common";
 
 type Props = {
   isOpen: boolean;
@@ -16,15 +18,15 @@ type Props = {
 const CreateProjectModal = ({ isOpen, onClose }: Props) => {
   const { mutate } = useCreateProject();
   const [, setFile] = useState<File | null>(null);
-  const [formData, setFormData] = useState<ProjectFormState>({
+  const [formData, setFormData] = useState<State>({
     title: { value: "", isValid: true, message: "" },
     description: { value: "", isValid: true, message: "" },
   });
-
-  const validators = useMemo(() => ({
+  const validators: Validators = useMemo(() => ({
     title: titleValidator,
     description: descriptionValidator,
   }),[]);
+  const { checkField } = useCheckingSet(validators, setFormData);
 
   const clear = useCallback(() => {
     setFile(null);
@@ -33,19 +35,6 @@ const CreateProjectModal = ({ isOpen, onClose }: Props) => {
       description: { value: "", isValid: true, message: "" },
     });
   }, []);
-
-  const checkField = useCallback((fieldName: keyof ProjectFormState, value: string) => {
-    const result = validators[fieldName](value);
-    setFormData((prev) => ({
-      ...prev,
-      [fieldName]: {
-        value: value,
-        isValid: result.isValid,
-        message: result.message,
-      },
-    }));
-    return result.isValid;
-  },[validators]);
 
   const closeModal = useCallback(() => {
     onClose();
