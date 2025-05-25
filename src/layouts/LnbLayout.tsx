@@ -8,14 +8,14 @@ const LnbLayout = () => {
   const [isOpen, setIsOpen] = useState(true);
   const toggleSidebar = () => setIsOpen(!isOpen);
   return (
-    <>
+    <div className="w-screen h-screen flex flex-col">
       <Header toggleSidebar={toggleSidebar} />
-      <div className="flex">
+      <div className="flex flex-1">
         <Lnb_1 />
         <Lnb_2 isOpen={isOpen} />
         <Outlet />
       </div>
-    </>
+    </div>
   );
 };
 

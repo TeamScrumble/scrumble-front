@@ -1,14 +1,10 @@
 type Props = {
   isOpen: boolean;
-}
+};
 
 const Lnb_2 = ({ isOpen }: Props) => {
   return (
-    <div
-      className="flex text-[#1A1A1A] "
-      style={{ height: "calc(100vh - 66px)", borderRight: "1px solid #E1E1E2" }}
-    >
-      {/* Sidebar */}
+    <div className="flex text-[#1A1A1A] border-r border-r-border-500">
       <div
         className={`bg-white px-3 py-7 transition-all duration-500 ${
           isOpen ? "w-64" : "w-18"
