@@ -4,7 +4,9 @@ const Sprint = () => {
   // project detail에 대한 fetch가 필요함
   return (
     <div className="flex justify-center">
-      <h1>{`Project #${projectRowid}`}</h1>
+      <div className="flex justify-center">
+        <h1>{`Project #${projectRowid}`}</h1>
+      </div>
     </div>
   );
 };
