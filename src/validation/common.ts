@@ -3,6 +3,8 @@ export interface Valid {
   message: string;
 }
 
+export type Validators = Record<string, (value: string) => Valid>
+
 export const valid = (message: string = ""): Valid => ({
   isValid: true,
   message,

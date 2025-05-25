@@ -3,3 +3,5 @@ export type Field = {
   isValid: boolean;
   message: string;
 }
+
+export type State = Record<string, Field>;
