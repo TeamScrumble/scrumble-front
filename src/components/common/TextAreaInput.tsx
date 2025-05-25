@@ -4,10 +4,13 @@ type Props = {
   value: string;
   placeholder: string;
   required: boolean;
-  isError: boolean;
+  isValid: boolean;
   errorMessage: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  onChange?: (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  onBlur?: (
+    e: React.FocusEvent<HTMLTextAreaElement>
   ) => void;
 };
 
@@ -17,12 +20,13 @@ const TextAreaInput = ({
   value,
   placeholder = "",
   required = false,
-  isError,
+  isValid,
   errorMessage = "",
   onChange,
+  onBlur
 }: Props) => {
   let borderColor;
-  if (!isError) {
+  if (isValid) {
     borderColor = "border-slate-200";
   } else {
     borderColor = "border-red-500";
@@ -38,10 +42,11 @@ const TextAreaInput = ({
         name={name}
         rows={3}
         onChange={onChange}
+        onBlur={onBlur}
         placeholder={placeholder}
         className={`flex h-[120px] pt-3 pb-3 pl-4 pr-4 items-center gap-6 self-stretch border ${borderColor} bg-white rounded-sm`}
       />
-      {isError && <div className="text-red-500">{errorMessage}</div>}
+      {!isValid && <div className="text-red-500">{errorMessage}</div>}
     </div>
   );
 };

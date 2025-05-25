@@ -4,10 +4,13 @@ type Props = {
   value: string;
   placeholder: string;
   required: boolean;
-  isError: boolean;
+  isValid: boolean;
   errorMessage: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  onChange?: (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => void;
+  onBlur?: (
+    e: React.FocusEvent<HTMLInputElement>
   ) => void;
 };
 
@@ -17,9 +20,10 @@ const TextInput = ({
   value,
   placeholder = "",
   required = false,
-  isError,
+  isValid,
   errorMessage = "",
   onChange,
+  onBlur,
 }: Props) => {
   return (
     <div className="flex flex-col items-start gap-2.5 self-stretch">
@@ -32,12 +36,13 @@ const TextInput = ({
         value={value}
         name={name}
         onChange={onChange}
+        onBlur={onBlur}
         placeholder={placeholder}
         className={`flex items-center self-stretch h-12 gap-6 pt-3 pb-3 pl-4 pr-4 bg-white border rounded-sm ${
-          !isError ? "border-slate-200" : "border-red-500"
+          isValid ? "border-slate-200" : "border-red-500"
         }`}
       />
-      {isError && <div className="text-red-500">{errorMessage}</div>}
+      {!isValid && <div className="text-red-500">{errorMessage}</div>}
     </div>
   );
 };

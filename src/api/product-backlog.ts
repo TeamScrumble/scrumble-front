@@ -7,9 +7,9 @@ export type ProductBacklog = {
   regDate: Date;
 }
 
-export async function fetchProductBacklog(
-  request: FetchProductBacklogRequest
-): Promise<FetchProductBacklogResponse> {
+export const getProductBacklog = async (
+  request: GetProductBacklogRequest
+): Promise<GetProductBacklogResponse> => {
   const res = await fetch(`${API_BASE_URL}/product-backlogs`, {
     method: "GET",
     headers: {
@@ -22,17 +22,17 @@ export async function fetchProductBacklog(
   return res.json();
 }
 
-export type FetchProductBacklogRequest = {
+export type GetProductBacklogRequest = {
   projectRowid: number;
 };
 
-export type FetchProductBacklogResponse = CommonResponse & {
+export type GetProductBacklogResponse = CommonResponse & {
   data: ProductBacklog[];
 };
 
-export async function createProductBacklog(
+export const createProductBacklog = async (
   request: CreateProductBacklogRequest
-): Promise<CreateProductBacklogResponse> {
+): Promise<CreateProductBacklogResponse> => {
   const res = await fetch(`${API_BASE_URL}/product-backlog`, {
     method: "POST",
     headers: {
