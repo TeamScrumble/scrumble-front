@@ -1,10 +1,11 @@
 import { useState } from "react";
 
 type Props = {
+  placeholder?: string;
   enterEvent: () => void;
 }
 
-const SearchInput = ({ enterEvent }: Props) => {
+const SearchInput = ({ placeholder, enterEvent }: Props) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -21,7 +22,7 @@ const SearchInput = ({ enterEvent }: Props) => {
         value={inputValue}
         onKeyDown={handleKeyDown}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="프로젝트를 검색해라"
+        placeholder = { placeholder }
         className="flex-grow text-sm placeholder-gray-400 bg-transparent outline-none"
       />
       <svg
