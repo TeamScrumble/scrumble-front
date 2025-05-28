@@ -10,11 +10,17 @@ on:
         options:
         - manual-deploy
         - total-deploy
+  pull_request:
+    types: [opened]
+  pull_request_review:
+    types: [submitted]
 
 jobs:
     node-build:
         runs-on: build
-        if: ${{ inputs.deploy_target == 'total-deploy' || (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') }}
+        if: |
+          github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'pull_request_review' && github.event.review.state == 'approved')
         steps:
         - name: 소스 코드 체크아웃
           uses: actions/checkout@v4
@@ -48,7 +54,9 @@ jobs:
     docker-build:
         runs-on: build
         needs: node-build
-        if: ${{ inputs.deploy_target == 'total-deploy' || (github.event_name == 'pull_request_review' && github.event.review.state == 'approved') }}
+        if: |
+          github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'pull_request_review' && github.event.review.state == 'approved')
         steps:
         - name: 소스 코드 체크아웃
           uses: actions/checkout@v4
@@ -72,7 +80,7 @@ jobs:
 
     docker-deploy-manual:
         runs-on: build
-        if: inputs.deploy_target == 'manual-deploy'
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_target == 'manual-deploy'
         steps:
         - name: 도커 이미지 가져오기
           run: docker pull localhost:5000/react-app:latest
@@ -94,7 +102,7 @@ jobs:
     docker-deploy-total:
         runs-on: build
         needs: docker-build
-        if: inputs.deploy_target == 'total-deploy'
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_target == 'total-deploy'
         steps:
         - name: 도커 이미지 가져오기
           run: docker pull localhost:5000/react-app:latest
@@ -112,3 +120,28 @@ jobs:
             -p 3111:80 \
             localhost:5000/react-app:latest
             
+
+    notify-discord-on-pr-and-approve:
+        if: |
+          github.event_name == 'pull_request' ||
+          (github.event_name == 'pull_request_review' && github.event.review.state == 'approved')
+        runs-on: ubuntu-latest
+        steps:
+          - name: 디스코드로 PR/승인 알림 전송
+            env:
+              DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+              PR_TITLE: ${{ github.event.pull_request.title }}
+              PR_BODY: ${{ github.event.pull_request.body }}
+              PR_URL: ${{ github.event.pull_request.html_url }}
+              REVIEW_STATE: ${{ github.event.review.state }}
+              REVIEW_USER: ${{ github.event.review.user.login }}
+            run: |
+              if [ "$GITHUB_EVENT_NAME" = "pull_request_review" ] && [ "$REVIEW_STATE" = "approved" ]; then
+                MESSAGE="**Pull Request가 승인되었습니다!**\n제목: $PR_TITLE\n\n내용: $PR_BODY\n\n링크: $PR_URL\n승인자: $REVIEW_USER"
+              else
+                MESSAGE="**새 Pull Request가 열렸습니다!**\n제목: $PR_TITLE\n\n내용: $PR_BODY\n\n링크: $PR_URL"
+              fi
+              curl -H "Content-Type: application/json" \
+                -X POST \
+                -d "{\"content\": \"$MESSAGE\"}" \
+                $DISCORD_WEBHOOK_URL
