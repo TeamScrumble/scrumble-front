@@ -25,7 +25,7 @@ const Lnb_1 = () => {
       {/* Sidebar */}
       <div
         className={
-          "flex flex-col place-content-between  bg-[#d9d9d9] text-white px-3 py-7 w-18"
+          "flex flex-col place-content-between bg-[#D1D8DD] text-white px-3 py-7 w-18"
         }
       >
         <div>
@@ -47,7 +47,10 @@ const Lnb_1 = () => {
             <CreateProjectModal isOpen={modalOpen} onClose={() => setModalOpen(false)}/>
           </div>
         </div>
-        <div className="flex">멤버</div>
+        {/* 유저 아이콘 */}
+        <button className="flex h-12 flex-col justify-center items-center cursor-pointer rounded-[6px] border border-black bg-white">
+          <img src="/user.svg" alt="User"/>
+        </button>
       </div>
     </div>
   );
