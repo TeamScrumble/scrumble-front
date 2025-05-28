@@ -3,7 +3,7 @@ import { useState } from "react";
 type Props = {
   placeholder?: string;
   enterEvent: () => void;
-}
+};
 
 const SearchInput = ({ placeholder, enterEvent }: Props) => {
   const [inputValue, setInputValue] = useState("");
@@ -22,7 +22,7 @@ const SearchInput = ({ placeholder, enterEvent }: Props) => {
         value={inputValue}
         onKeyDown={handleKeyDown}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder = { placeholder }
+        placeholder={placeholder}
         className="flex-grow text-sm placeholder-gray-400 bg-transparent outline-none"
       />
       <svg
