@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import SearchInput from "../common/SearchInput";
 
 type Props = {
@@ -5,6 +6,7 @@ type Props = {
 }
 
 const Header = ({ toggleSidebar }: Props) => {
+  const navigate = useNavigate();
   const searchEnterEvent = () => {
     // 엔터 이벤트 주기
   };
@@ -19,9 +21,9 @@ const Header = ({ toggleSidebar }: Props) => {
            <img src="/menu.svg" alt="User"/>
         </button>
 
-        <div className="ml-4 text-[32px] font-bold leading-[24px] text-[#FBAC6B]">
-          Scrumble
-        </div>
+        <button className="ml-4 cursor-pointer" onClick={() => navigate("/")}>
+          <img src="/Scrumble.svg" alt="header logo"/>
+        </button>
       </div>
 
       <div className="flex w-full place-content-center">
