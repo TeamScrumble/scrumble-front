@@ -16,7 +16,7 @@ const SearchInput = ({ placeholder, enterEvent }: Props) => {
   };
 
   return (
-    <div className="flex items-center w-full max-w-xl mx-auto border border-gray-300 rounded-full px-4.5 py-2.5">
+    <div className="flex items-center w-full max-w-xl mx-auto border border-gray-300 rounded-full px-4.5 py-2.5 bg-white">
       <input
         type="text"
         value={inputValue}
