@@ -4,12 +4,14 @@ import Modal from "../common/Modal";
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  onLoginSuccess?: () => void; // 로그인 성공 시 호출되는 함수
 };
 
-const SignInModal = ({ isOpen, onClose }: Props) => {
+const SignInModal = ({ isOpen, onClose, onLoginSuccess }: Props) => {
   const handleGoogleSignIn = () => {
     // 여기에 Google 로그인 로직 추가
-    
+    if(onLoginSuccess) onLoginSuccess(); // 로그인 성공 시 onLoginSuccess 호출
+    onClose(); // 모달 닫기
   };
 
   const backEvent = () => {
@@ -18,7 +20,7 @@ const SignInModal = ({ isOpen, onClose }: Props) => {
 
   return (
     <Modal width={547} isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col items-center justify-center h-160 bg-white">
+      <div className="flex flex-col items-center justify-center h-160 bg-white w-full">
         <button className="cursor-pointer absolute top-4 left-4 px-4 py-2 rounded-full border text-sm hover:bg-gray-100" onClick={backEvent}>
            <span><img src="/chevron-left.svg" alt="Back" className="inline-block w-4 h-4 mr-1" /></span>Back
         </button>
@@ -30,7 +32,7 @@ const SignInModal = ({ isOpen, onClose }: Props) => {
           height={150}
         />
 
-        <h1 className="text-2xl font-semibold mt-9">Sign in to Scrumble</h1>
+        <h1 className="text-3xl font-semibold mt-9">Sign in to Scrumble</h1>
 
         <button
           onClick={handleGoogleSignIn}

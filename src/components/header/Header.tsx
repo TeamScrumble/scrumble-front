@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import SearchInput from "../common/SearchInput";
-import SignInModal from "../login/SignInModal";
+import SignInModal from "../signin/SignInModal";
+import SignInCompleteModal from "../signin/SignInCompleteModal";
+import SignInAdditionalInfoModal from "../signin/SignInAdditionalInfoModal";
 
 type Props = {
   toggleSidebar: () => void;
 }
 
 const Header = ({ toggleSidebar }: Props) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [signInModalOpen, setSignInModalOpen] = useState(false);
+  const [signInCompleteModalOpen, setSignInCompleteModalOpen] = useState(false);
+  const [signInAdditionalInfoModalOpen, setSignInAdditionalInfoModalOpen] = useState(false);
   const searchEnterEvent = () => {
     // 엔터 이벤트 주기
   };
@@ -34,11 +38,13 @@ const Header = ({ toggleSidebar }: Props) => {
           <SearchInput placeholder="Please search for a project" enterEvent={searchEnterEvent} />
         </div>
 
-        <div className="cursor-pointer text-sm font-normal mr-8" onClick={() => setModalOpen(true)}>
+        <div className="cursor-pointer text-sm font-normal mr-8" onClick={() => setSignInModalOpen(true)}>
           Sign in
         </div>
       </div>
-      <SignInModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      <SignInModal isOpen={signInModalOpen} onClose={() => setSignInModalOpen(false)} onLoginSuccess={() => setSignInCompleteModalOpen(true)} />
+      <SignInCompleteModal isOpen={signInCompleteModalOpen} onClose={() => setSignInCompleteModalOpen(false)} onNext={() => setSignInAdditionalInfoModalOpen(true)} />
+      <SignInAdditionalInfoModal isOpen={signInAdditionalInfoModalOpen} onClose={() => setSignInAdditionalInfoModalOpen(false)} onComplete={() => {}} />
     </>
   );
 };

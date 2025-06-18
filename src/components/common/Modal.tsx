@@ -8,7 +8,7 @@ type Props = {
   children: ReactNode;
 };
 
-const Modal = ({ isOpen, onClose, children }: Props) => {
+const Modal = ({ width, isOpen, onClose, children }: Props) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -27,10 +27,11 @@ const Modal = ({ isOpen, onClose, children }: Props) => {
       />
       <div
         className={`
-          w-xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50
-        bg-white flex flex-col items-center gap-3 pt-[41px] pb-[41px] pl-6 pr-6 rounded-2xl
+          fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50
+        bg-white flex flex-col items-center gap-3 p-6 rounded-2xl
         `}
         onClick={(e) => e.stopPropagation()}
+        style={{ width: `${width}px` }}
       >
         {children}
       </div>

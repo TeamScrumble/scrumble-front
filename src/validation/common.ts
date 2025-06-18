@@ -30,3 +30,11 @@ export const isBlank = (message: string) => (v: string) =>
 
 export const maxLength = (max: number, message: string) => (v: string) =>
   v.length > max ? invalid(message) : valid();
+
+
+export const minLength = (min: number, message: string) => (v: string) =>
+  v.length < min ? invalid(message) : valid();
+
+// 한글, 영문, 숫자, 언더스코어(_)만 허용하는 validator
+export const onlyKorEngNumUnder = (message: string) => (v: string) =>
+  /^[\uAC00-\uD7A3a-zA-Z0-9_]+$/.test(v) ? valid() : invalid(message);

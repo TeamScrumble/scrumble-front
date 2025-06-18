@@ -27,10 +27,12 @@ const TextInput = ({
 }: Props) => {
   return (
     <div className="flex flex-col items-start gap-2.5 self-stretch">
-      <div className="self-stretch leading-4 text-[16px] font-medium">
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </div>
+      {label !== "" && 
+        <div className="self-stretch leading-4 text-[16px] font-medium">
+          {label}
+          {required && <span className="text-red-500">*</span>}
+        </div>
+      }
       <input
         type="text"
         value={value}
@@ -42,7 +44,7 @@ const TextInput = ({
           isValid ? "border-slate-200" : "border-red-500"
         }`}
       />
-      {!isValid && <div className="text-red-500">{errorMessage}</div>}
+      {!isValid && errorMessage != "" && <div className="text-red-500">{errorMessage}</div>}
     </div>
   );
 };
