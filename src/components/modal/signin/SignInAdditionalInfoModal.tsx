@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Modal from "../common/Modal";
-import TextInput from "../common/TextInput";
-import useCheckingSet from "../../hook/useCheckingSet";
-import { State } from "../../@types/common";
-import { createUserValidators } from "../../validation/user";
-import useAllValid from "../../hook/useAllValid";
+import Modal from "../../common/Modal";
+import TextInput from "../../common/TextInput";
+import useCheckingSet from "../../../hook/useCheckingSet";
+import { State } from "../../../@types/common";
+import { createUserValidators } from "../../../validation/user";
+import useAllValid from "../../../hook/useAllValid";
 
 type Props = {
   isOpen: boolean;
@@ -20,7 +20,7 @@ const SignInAdditionalInfoModal = ({ isOpen, onClose, onComplete, email }: Props
   });
   const allValid = useAllValid(formData)
   const { checkField } = useCheckingSet(createUserValidators, setFormData);
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("custom");
   const [customRole, setCustomRole] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import SearchInput from "../common/SearchInput";
-import SignInModal from "../signin/SignInModal";
-import SignInCompleteModal from "../signin/SignInCompleteModal";
-import SignInAdditionalInfoModal from "../signin/SignInAdditionalInfoModal";
+import SignInModal from "../modal/signin/SignInModal";
+import SignInCompleteModal from "../modal/signin/SignInCompleteModal";
+import SignInAdditionalInfoModal from "../modal/signin/SignInAdditionalInfoModal";
 
 type Props = {
   toggleSidebar: () => void;

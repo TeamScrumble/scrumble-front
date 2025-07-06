@@ -1,9 +1,12 @@
 import { useState } from "react";
+import InviteMemberModal from "../../components/modal/inviteMember/InviteMemberModal";
 // import { useParams } from "react-router-dom";
 
 const Dashboard = () => {
   // const { projectRowid } = useParams();
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+  const [sharelinkOpen, setSharelinkOpen] = useState(false);
+  
   const dummyData = {
     projectName: "Scrumble",
     description:
@@ -20,8 +23,8 @@ const Dashboard = () => {
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">{dummyData.projectName}</h1>
           <div className="flex gap-1">
-            <img src="/sharelink.svg" alt="sharelink" />
-            <img src="/peoples.svg" alt="peoples" />
+            <img src="/sharelink.svg" alt="sharelink"/>
+            <img src="/peoples.svg" alt="peoples" className="cursor-pointer" onClick={() => setSharelinkOpen(true)}/>
             <span className="text-[16px]">6</span>
           </div>
         </div>
@@ -39,6 +42,7 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+      <InviteMemberModal isOpen={sharelinkOpen} onClose={() => setSharelinkOpen(false)} />
     </div>
   );
 };
