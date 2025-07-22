@@ -63,7 +63,7 @@ jobs:
             echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_HOST }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
 
         - name: Docker 이미지 빌드
-          run: docker build --platform linux/arm64 -t ${{ secrets.REGISTRY_HOST }}/react-app:latest . --build-arg VITE_API_BASE_URL=https://scrumble.kro.kr/api
+          run: docker build --platform linux/arm64 -t ${{ secrets.REGISTRY_HOST }}/react-app:latest . --build-arg VITE_API_BASE_URL=https://scrumble.kro.kr
         
         - name: 도커 이미지 푸시
           run: docker push ${{ secrets.REGISTRY_HOST }}/react-app:latest
