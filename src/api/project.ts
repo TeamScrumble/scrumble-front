@@ -29,8 +29,14 @@ const createProject = async (
   request: CreateProjectRequest
 ): Promise<CR<CreateProject>> => {
   const formData = new FormData();
-  formData.append("title", request.title);
-  formData.append("description", request.description);
+  const requestBlob = new Blob(
+  [JSON.stringify({
+    title: request.title.trim(),
+    description: request.description.trim()
+  })], 
+  { type: "application/json" }
+);
+formData.append("request", requestBlob);
 
   // 파일이 올 경우에만 파일 넣어주기
   if (request.thumbnail) {
@@ -39,13 +45,10 @@ const createProject = async (
 
   const res = await fetch(`${API_BASE_URL}/project`, {
     method: "POST",
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
     body: formData,
     credentials: "include",
   });
-  if (!res.ok) throw new Error("createProject response was not ok");
+  
   return res.json();
 }
 
