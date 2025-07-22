@@ -42,7 +42,7 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-      <InviteMemberModal isOpen={sharelinkOpen} onClose={() => setSharelinkOpen(false)} />
+      <InviteMemberModal isOpen={sharelinkOpen} onClose={() => setSharelinkOpen(false)} memberList={[]}/>
     </div>
   );
 };

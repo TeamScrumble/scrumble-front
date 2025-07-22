@@ -28,12 +28,21 @@ export type GetProject = {
 const createProject = async (
   request: CreateProjectRequest
 ): Promise<CR<CreateProject>> => {
+  const formData = new FormData();
+  formData.append("title", request.title);
+  formData.append("description", request.description);
+
+  // 파일이 올 경우에만 파일 넣어주기
+  if (request.thumbnail) {
+    formData.append("thumbnail", request.thumbnail);
+  }
+
   const res = await fetch(`${API_BASE_URL}/project`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
-    body: JSON.stringify(request),
+    body: formData,
     credentials: "include",
   });
   if (!res.ok) throw new Error("createProject response was not ok");
@@ -43,6 +52,7 @@ const createProject = async (
 export type CreateProjectRequest = {
   title: string;
   description: string;
+  thumbnail: File | null;
 };
 
 export type CreateProject = {

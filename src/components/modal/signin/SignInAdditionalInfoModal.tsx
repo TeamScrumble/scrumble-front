@@ -13,7 +13,8 @@ type Props = {
   email?: string;
 };
 
-const SignInAdditionalInfoModal = ({ isOpen, onClose, onComplete, email }: Props) => {
+const SignInAdditionalInfoModal = ({ isOpen, onClose, email }: Props) => {
+  
   const [formData, setFormData] = useState<State>({
     nickName: { value: "", isValid: false, message: "" },
     customRole: { value: "", isValid: false, message: "" }

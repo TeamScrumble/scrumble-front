@@ -16,7 +16,7 @@ type Props = {
 
 const CreateProjectModal = ({ isOpen, onClose }: Props) => {
   const { mutate } = useCreateProject();
-  const [, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [formData, setFormData] = useState<State>({
     title: { value: "", isValid: true, message: "" },
     description: { value: "", isValid: true, message: "" },
@@ -45,6 +45,7 @@ const CreateProjectModal = ({ isOpen, onClose }: Props) => {
         mutate({
           title: formData.title.value,
           description: formData.description.value,
+          thumbnail: file, 
         });
         closeModal();
       }
@@ -55,6 +56,7 @@ const CreateProjectModal = ({ isOpen, onClose }: Props) => {
       formData.description.value,
       mutate,
       closeModal,
+      file
     ]
   );
 

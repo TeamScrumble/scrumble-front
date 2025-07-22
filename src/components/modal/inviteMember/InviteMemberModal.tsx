@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Modal from "../../common/Modal";
 import { MemberRole } from "../../../enums/Member";
 
@@ -41,6 +41,7 @@ const dummyMembers: Member[] = [
 ];
 
 const InviteMemberModal = ({ isOpen, onClose, memberList }: Props) => {
+  console.log(memberList)
   const [email, setEmail] = useState("");
   const [members, setMembers] = useState(dummyMembers);
   const [shareLink] = useState("https://scrumble.ex/");

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SearchInput from "../common/SearchInput";
 import SignInModal from "../modal/signin/SignInModal";
 import SignInCompleteModal from "../modal/signin/SignInCompleteModal";
