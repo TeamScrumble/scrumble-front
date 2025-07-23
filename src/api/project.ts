@@ -14,7 +14,7 @@ export const getProject = async (): Promise<CR<GetProject>> => {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
+    credentials: "omit",
   });
   if (!res.ok) throw new Error("fetchProject response was not ok");
   return res.json();
@@ -43,7 +43,7 @@ const createProject = async (
       "Content-Type": "multipart/form-data",
     },
     body: formData,
-    credentials: "include",
+    credentials: "omit",
   });
   if (!res.ok) throw new Error("createProject response was not ok");
   return res.json();
