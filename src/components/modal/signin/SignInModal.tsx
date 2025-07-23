@@ -1,4 +1,5 @@
 import Modal from "../../common/Modal";
+import useLogin from "../../../hook/useLogin";
 
 type Props = {
   isOpen: boolean;
@@ -7,29 +8,37 @@ type Props = {
 };
 
 const SignInModal = ({ isOpen, onClose, onLoginSuccess }: Props) => {
+  const { handleLogin } = useLogin()
   const handleGoogleSignIn = () => {
     // 여기에 Google 로그인 로직 추가
-    if(onLoginSuccess) onLoginSuccess(); // 로그인 성공 시 onLoginSuccess 호출
+    console.log("로그인 시도");
+    handleLogin()
+    if (onLoginSuccess) onLoginSuccess(); // 로그인 성공 시 onLoginSuccess 호출
     onClose(); // 모달 닫기
   };
 
   const backEvent = () => {
     onClose();
-  }
+  };
 
   return (
     <Modal width={547} isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col items-center justify-center h-160 bg-white w-full">
-        <button className="cursor-pointer absolute top-4 left-4 px-4 py-2 rounded-full border text-sm hover:bg-gray-100" onClick={backEvent}>
-           <span><img src="/chevron-left.svg" alt="Back" className="inline-block w-4 h-4 mr-1" /></span>Back
+        <button
+          className="cursor-pointer absolute top-4 left-4 px-4 py-2 rounded-full border text-sm hover:bg-gray-100"
+          onClick={backEvent}
+        >
+          <span>
+            <img
+              src="/chevron-left.svg"
+              alt="Back"
+              className="inline-block w-4 h-4 mr-1"
+            />
+          </span>
+          Back
         </button>
 
-        <img
-          src="/scrumble.svg"
-          alt="Scrumble logo"
-          width={150}
-          height={150}
-        />
+        <img src="/scrumble.svg" alt="Scrumble logo" width={150} height={150} />
 
         <h1 className="text-3xl font-semibold mt-9">Sign in to Scrumble</h1>
 
@@ -42,7 +51,9 @@ const SignInModal = ({ isOpen, onClose, onLoginSuccess }: Props) => {
             alt="Google"
             className="w-5 h-5"
           />
-          <span className="text-sm font-medium text-gray-700">Sign in with Google</span>
+          <span className="text-sm font-medium text-gray-700">
+            Sign in with Google
+          </span>
         </button>
       </div>
     </Modal>

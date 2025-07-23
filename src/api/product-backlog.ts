@@ -16,7 +16,7 @@ export const getProductBacklog = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify(request),
-    credentials: "include",
+    credentials: "omit",
   });
   if (!res.ok) throw new Error("Network response was not ok");
   return res.json();
@@ -35,7 +35,7 @@ export const createProductBacklog = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify(request),
-    credentials: "include",
+    credentials: "omit",
   });
 
   if (!res.ok) throw new Error("User creation failed");
