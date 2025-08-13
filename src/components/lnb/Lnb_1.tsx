@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { getProject, Project } from "../../api/project";
 import ProjectProfile from "./ProjectProfile";
 import Modal from "../common/Modal";
 import CreateProjectModal from "./CreateProjectModal";
 import { useState } from "react";
+import { GET_PROJECT_QK, getProject } from "../../api/project/getProject";
+import { Project } from "../../@types/project";
 
 const Lnb_1 = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["projects"],
+    queryKey: [GET_PROJECT_QK],
     queryFn: getProject,
   });
   const [modalOpen, setModalOpen] = useState(false);
