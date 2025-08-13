@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { useCreateProject } from "../../api/project";
 import Modal from "../common/Modal";
 import FileUploadBox from "../common/FileUploadBox";
 import TextInput from "../common/TextInput";
@@ -8,6 +7,7 @@ import TextAreaInput from "../common/TextAreaInput";
 import { createProjectValidators } from "../../validation/project";
 import { State } from "../../@types/common";
 import useCheckingSet from "../../hook/useCheckingSet";
+import { useCreateProject } from "../../api/project/createProject";
 
 type Props = {
   isOpen: boolean;
