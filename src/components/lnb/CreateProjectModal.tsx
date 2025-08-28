@@ -62,7 +62,7 @@ const CreateProjectModal = ({ isOpen, onClose }: Props) => {
 
   return (
     <Modal width={560} isOpen={isOpen} onClose={closeModal}>
-      <div className="text-2xl font-bold">새 프로젝트 생성</div>
+      <div className="text-2xl font-bold">New Project</div>
       <form
         onSubmit={onSubmit}
         className="flex flex-col items-center w-full gap-3"
