@@ -58,20 +58,29 @@ jobs:
           with:
             name: node-build
             path: dist
+        - name: Docker Registry 로그인
+          run: |
+            echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_HOST }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
 
         - name: Docker 이미지 빌드
-          run: docker build -t localhost:5000/react-app:latest . --build-arg VITE_API_BASE_URL=https://api.scrumble.kro.kr
+          run: docker build --platform linux/arm64 -t ${{ secrets.REGISTRY_HOST }}/react-app:latest . --build-arg VITE_API_BASE_URL=https://scrumble.kro.kr
+        
         - name: 도커 이미지 푸시
-          run: docker push localhost:5000/react-app:latest
+          run: docker push ${{ secrets.REGISTRY_HOST }}/react-app:latest
 
         - name: 도커 이미지 업로드
           uses: actions/upload-artifact@v4
           with:
             name: react-app-image
             path: react-app.tar
+            
+        - name: Docker 로그아웃
+          run: docker logout ${{ secrets.REGISTRY_HOST }}    
 
     docker-deploy-manual:
-        runs-on: build
+        runs-on: deploy
+        env:
+           DOCKER_NETWORK: ${{ secrets.DOCKER_NETWORK }}
         if: inputs.deploy_target == 'manual-deploy'
         steps:
         - name: 도커 이미지 가져오기
@@ -86,13 +95,15 @@ jobs:
           run: |
             docker run -d \
             --name react-app \
-            --network scrumble \
+            --network "$DOCKER_NETWORK" \
             -p 3111:80 \
             localhost:5000/react-app:latest
             
 
     docker-deploy-total:
-        runs-on: build
+        runs-on: deploy
+        env:
+           DOCKER_NETWORK: ${{ secrets.DOCKER_NETWORK }}
         needs: docker-build
         if: inputs.deploy_target == 'total-deploy'
         steps:
@@ -108,7 +119,7 @@ jobs:
           run: |
             docker run -d \
             --name react-app \
-            --network scrumble \
+            --network "$DOCKER_NETWORK" \
             -p 3111:80 \
             localhost:5000/react-app:latest
             
